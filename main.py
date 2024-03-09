@@ -94,6 +94,17 @@ def connect_db():
         print("Error connecting to the database:", e)
         return None
 
+def create_table():
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    # SQL query to create the 'news_data' table
+    
+    
+    cursor.execute( "CREATE TABLE IF NOT EXISTS news_data (id SERIAL PRIMARY KEY,url VARCHAR(255) NOT NULL,text TEXT NOT NULL,summary TEXT)")
+    conn.commit()
+    conn.close()
+
 
 import requests
 from bs4 import BeautifulSoup
@@ -331,7 +342,7 @@ def submit():
             }
 
 
-            
+            create_table()
             store_data(url, article.text, str(summary))
         except requests.RequestException as e:
             flash(f"Failed to fetch data from URL: {e}", "error")
