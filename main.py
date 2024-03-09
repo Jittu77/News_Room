@@ -290,50 +290,38 @@ def retrieve_data():
 def index():    
     return render_template('index.html')
 
-# Route for submitting URL
 @app.route('/submit', methods=['POST'])
 def submit():
 
-    # url = request.form['url']
     if request.form['submit'] == "url":
         url = request.form['url']
         if not url.startswith(('http://', 'https://')):
             flash("Invalid URL! Please enter a valid URL starting with http:// or https://", "error")
             return redirect(url_for('index'))
-        
+
         try:
-            # response = requests.get(url)
-            # response.raise_for_status()  # Raise an error for invalid HTTP response
-            # soup = BeautifulSoup(response.text, 'html.parser')
-            # news_text = soup.get_text()
-            # cleaned_text = clean_text(news_text)
-            # num_sentences, num_words, pos_tags = analyze_text(cleaned_text)
             article = Article(url)
             article.download()
             article.parse()
-            # y=article.text
+
             num_sentences, num_words, pos_tags = analyze_text(article.text)
 
-            
             article.nlp()
-            word_list1 =nltk.word_tokenize(article.text)
-            words_pos=nltk.pos_tag(word_list1, tagset="universal")
+            word_list1 = nltk.word_tokenize(article.text)
+            words_pos = nltk.pos_tag(word_list1, tagset="universal")
 
-            pos=[]
-            numbers=[]
-            summary_main={}
+            pos = []
+            numbers = []
+            summary_main = {}
 
-            for i in words_pos: 
+            for i in words_pos:
                 if i[1] not in pos:
                     pos.append(i[1])
-            count=1
-            for i in range(len(pos)):
-                for j in words_pos:
-                    if j[1]==pos[i]:
-                        count+=1
-                numbers.append(count)
-                summary_main[pos[i]]=count
 
+            for p in pos:
+                count = sum(1 for word, pos_tag in words_pos if pos_tag == p)
+                numbers.append(count)
+                summary_main[p] = count
 
             summary = {
                 'num_sentences': num_sentences,
@@ -341,32 +329,29 @@ def submit():
                 'pos_tags': summary_main
             }
 
-
             create_table()
-            # store_data(url, article.text, str(summary))
+
         except requests.RequestException as e:
             flash(f"Failed to fetch data from URL: {e}", "error")
+            return redirect(url_for('index'))
         except Exception as e:
             flash(f"An error occurred: {e}", "error")
+            return redirect(url_for('index'))
 
-        # extracting Image url and storing in image_url
         main_image_url = extract_main_image(url)
         try:
             if url.startswith(('https://www.thehindu.com')) and get_largest_image(url):
                 main_image_url = get_largest_image(url)
-                
+
             if extract_main_image(url):
                 main_image_url = extract_main_image(url)
         except:
-            main_image_url=None
-                    
-        if article.authors:
-            author=article.authors
-        else:
-            author=None
+            main_image_url = None
 
-        return render_template('index.html', image_url=main_image_url, article_text=article.text,content12=["Author", "Publish date", "Num_Sentences", " Num_Words" ], sum="Summary of Article",page= "More About The page", article_summary= article.summary, no_of_pos_tags=numbers, pos=pos, aricle_name=article.title, published_date=article.publish_date , author=author, num_sentences=num_sentences, num_words=num_words)
-        # return redirect(url_for('index')) 
+        author = article.authors if article.authors else None
+
+        return render_template('index.html', image_url=main_image_url, article_text=article.text, content12=["Author", "Publish date", "Num_Sentences", "Num_Words"], sum="Summary of Article", page="More About The page", article_summary=article.summary, no_of_pos_tags=numbers, pos=pos, article_name=article.title, published_date=article.publish_date, author=author, num_sentences=num_sentences, num_words=num_words)
+
     elif request.form['submit'] == "news_website":
         selected_option = None        
         selected_option = request.form.get('news_website')
