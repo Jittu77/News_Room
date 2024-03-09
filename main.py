@@ -365,7 +365,7 @@ def submit():
         else:
             author=None
 
-        return render_template('index.html', image_url=main_image_url, article_text=article.text,content12=["Author", "Publish date", "Num_Sentences", " Num_Words" ], sum="Summary of Article",page= "More About The page", article_summary= article.summary, pos=pos, aricle_name=article.title, published_date=article.publish_date , author=author, num_sentences=num_sentences, num_words=num_words)
+        return render_template('index.html', image_url=main_image_url, article_text=article.text,content12=["Author", "Publish date", "Num_Sentences", " Num_Words" ], sum="Summary of Article",page= "More About The page", article_summary= article.summary)
         # return redirect(url_for('index')) 
     elif request.form['submit'] == "news_website":
         selected_option = None        
