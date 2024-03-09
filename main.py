@@ -343,7 +343,7 @@ def submit():
 
 
             create_table()
-            store_data(url, article.text, str(summary))
+            # store_data(url, article.text, str(summary))
         except requests.RequestException as e:
             flash(f"Failed to fetch data from URL: {e}", "error")
         except Exception as e:
