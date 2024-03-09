@@ -83,10 +83,10 @@ def analyze_text(text):
 def connect_db():
     try:
         conn = psycopg2.connect(
-            dbname="postgres",
-            user="postgres",
-            password="sql",
-            host="localhost",
+            dbname="news_data",
+            user="news_data_user",
+            password="sXcoxhccPPon1HLU6L2MaYLYGvUxmL9T",
+            host="dpg-cnm8730cmk4c73agff4g-a",
             port="5432",
         )
         return conn
