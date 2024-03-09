@@ -83,27 +83,16 @@ def analyze_text(text):
 def connect_db():
     try:
         conn = psycopg2.connect(
-            dbname="news_data",
-            user="news_data_user",
-            password="sXcoxhccPPon1HLU6L2MaYLYGvUxmL9T",
-            host="dpg-cnm8730cmk4c73agff4g-a",
+            dbname="postgres",
+            user="postgres",
+            password="sql",
+            host="localhost",
             port="5432",
         )
         return conn
     except psycopg2.Error as e:
         print("Error connecting to the database:", e)
         return None
-
-def create_table():
-    conn = connect_db()
-    cursor = conn.cursor()
-    
-    # SQL query to create the 'news_data' table
-    
-    
-    cursor.execute( "CREATE TABLE IF NOT EXISTS news_data (id SERIAL PRIMARY KEY,url VARCHAR(255) NOT NULL,text TEXT NOT NULL,summary TEXT)")
-    conn.commit()
-    conn.close()
 
 
 import requests
@@ -254,6 +243,17 @@ def scrape_links_from_toi(url):
     return links_info
 
 
+def create_table():
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    # SQL query to create the 'news_data' table
+    
+    
+    cursor.execute( "CREATE TABLE IF NOT EXISTS news_data (id SERIAL PRIMARY KEY,url VARCHAR(255) NOT NULL,text TEXT NOT NULL,summary TEXT)")
+    conn.commit()
+    conn.close()
+
 # Function to store URL, news text, and analysis summary in PostgreSQL
 def store_data(url, text, summary):
     conn = connect_db()
@@ -343,7 +343,7 @@ def submit():
 
 
             create_table()
-            store_data(url, article.text, str(summary))
+            # store_data(url, article.text, str(summary))
         except requests.RequestException as e:
             flash(f"Failed to fetch data from URL: {e}", "error")
         except Exception as e:
@@ -365,7 +365,7 @@ def submit():
         else:
             author=None
 
-        return render_template('index.html', image_url=main_image_url, article_text=article.text,content12=["Author", "Publish date", "Num_Sentences", " Num_Words" ], sum="Summary of Article",page= "More About The page", article_summary= article.summary)
+        return render_template('index.html', image_url=main_image_url, article_text=article.text,content12=["Author", "Publish date", "Num_Sentences", " Num_Words" ], sum="Summary of Article",page= "More About The page", article_summary= article.summary, no_of_pos_tags=numbers, pos=pos, aricle_name=article.title, published_date=article.publish_date , author=author, num_sentences=num_sentences, num_words=num_words)
         # return redirect(url_for('index')) 
     elif request.form['submit'] == "news_website":
         selected_option = None        
