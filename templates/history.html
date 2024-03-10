@@ -460,17 +460,18 @@ section {
         <table class="table">
             <thead>
                 <tr>
+			<th>S.N</th>
                     <th>URL</th>
                     <th>Text</th>
                     <th>Summary</th>
-                    <th>image</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 {% for item in data %}
                 <tr>
-                    <td style="color: blue;">{{ item[0] }}</td>
-                    <td>{{ item[1] }}</td>
+                    <td >{{ item[0] }}</td>
+                    <td style="color: blue;">{{ item[1] }}</td>
                     <td>{{ item[2] }}</td>
                     <td>{{ item[3] }}</td>
                 </tr>
