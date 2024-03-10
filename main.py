@@ -192,6 +192,27 @@ def scrape_links_from_india_today(url):
 
     return scrap_links_hindu
 
+# scraping latest headlines and Url from Indian Express
+
+def scrap_links_from_indian_express(url):
+    # Adding headers to mimic a browser request
+    headers = {"User-Agent": "Mozilla/5.0"}
+    response = requests.get(url, headers=headers)
+
+    html = response.text
+    soup = BeautifulSoup(html, 'html.parser')
+    
+    headlines = []
+
+    # Extracting and collecting links and headlines
+    for div_element in soup.find_all('div', class_='articles'):
+        link = div_element.find('a')['href']
+        headline = div_element.find('h2').text.strip()
+        headlines.append((headline, link))
+
+    return headlines
+
+
 # scraping latest headlines and Url from India today
 
 def scrape_links_from_the_hindu(url):
@@ -396,9 +417,9 @@ def submit():
                 latest_headlines=scrape_links_from_toi(url_to_scrape)
                 return render_template('index.html', latest_headlines=latest_headlines,headers=headers)
 
-            else:
-                url_to_scrape = "https://timesofindia.indiatimes.com/"
-                latest_headlines=scrape_links_from_toi(url_to_scrape)
+            elif selected_option == 'Indian Express':
+                url_to_scrape = "https://indianexpress.com/latest-news/"
+                latest_headlines=scrap_links_from_indian_express(url_to_scrape)
                 return render_template('index.html', latest_headlines=latest_headlines,headers=headers)
         except:
             return render_template('index.html')
