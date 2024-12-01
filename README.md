@@ -1,4 +1,3 @@
-# News_Room
 # News Aggregator & Analyzer Application
 
 This is a Flask-based web application designed to scrape, summarize, and analyze news articles. Users can input a URL to retrieve the main content, extract and analyze text, summarize articles, and fetch the latest headlines from major news websites.
