@@ -49,7 +49,6 @@ Dependencies include:
 - requests
 - BeautifulSoup4
 - psycopg2
-- newspaper3k
 - nltk
 - authlib
 
