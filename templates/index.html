@@ -1,645 +1,734 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>News Analyser</title>
-<style>
-  /* Basic CSS styling */
-  
-  #iframeContainer {
-      display: none;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The News Boom</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --dark-color: #202124;
+            --light-color: #f8f9fa;
+            --accent-color: #ea4335;
+            --text-color: #3c4043;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
 
-    iframe {
-      width: 600px;
-      height: 500px;
-      border: none;
-      padding: 2px;
-      margin: 1px;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-	  min-width: 900px;
-  }
-  header {
-    background-color:  #1a73e8;
-    color: #fff;
-    padding: 10px 20px;
-    text-align: center;
-  }
-  h1 {
-    font-size: 24px;
-    margin: 10px 0;
-  }
-  .welcome-message {
-    text-align: center;
-    margin: 20px 0;
-  }
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  }
-  .url-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  .news-links {
-    margin-top: 20px;
-  }
-  .navigation {
-    background-color: #f1f1f1;
-    padding: 10px;
-    text-align: center;
-	  display: block;
-      overflow-x: auto;
-	
-  }
-  .navigation a {
-    margin: 0 10px;
-    color: #333;
-    text-decoration: none;
-  }
-  .navigation a:hover {
-    text-decoration: underline;
-  }
-  /* trying new navigation tags */
-  /* Navigation Styles */
-  .navigation {
-    background-color: #333;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .navigation a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 16px;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .navigation a:hover {
-    color: #4285f4;
-  }
-  .btn-primary {
-    /* display: inline-block; */
-    padding: 8px 14px;
-    font-size: 15px;
-    text-align: right;
-    text-decoration: none;
-    background-color: #4285f4;
-    color: #fff;
-    border-radius: 6px;
-    transition: background-color 0.3s ease-in-out;
-    
-  }
-  
-  .article-container {
-    max-width: 850px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: aliceblue;
-    box-shadow: 0 0 10px rgba(26, 102, 110, 0.1);
-    
-  }
-  td,th{
-      border: 2px solid black;
-  }
-  img {
-    
-    max-width: 60%;
-    /* max-height: 90%; */
-    float: right;
-    height: auto;
-    /* display:block; */
-    overflow-clip-margin: content-box;
-    /* overflow: clip; */
-    display: block;
-    overflow-x: auto;
-    
-    margin: 0 auto;
-    
-  }
-  /* Footer styles */
- 
-  body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-    }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f5f8fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
 
-    /* Common styles for all screen sizes */
-    .article-container {
-      max-width: 80%;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;
-      background-color: aliceblue;
-      overflow: hidden;
-    }
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #4285f4);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    h2 {
-      color: #333;
-    }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
 
-    p {
-      line-height: 1.6;
-      color: #555;
-    }
+        .site-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
-    .container {
-      max-width: 80%;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;
-    }
+        /* Navigation Styles */
+        .navigation {
+            background-color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .table_main {
-      text-align: center;
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      display: block;
-      overflow-x: auto;
-    }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      /* min-width: 50px; */
-     
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
 
-      text-align: center;
-    }
+        .nav-links a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 5px 0;
+            position: relative;
+            transition: var(--transition);
+        }
 
-    th {
-      background-color: #f2f2f2;
-    }
-  /* @media (max-width: 767px) {
-      .article-container {
-        padding: 10px;
-      }
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
 
-      .container {
-        padding: 10px;
-      }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
 
-      .table_main {
-        font-size: 14px;
-      }
-    } */
+        .nav-links a:hover:after {
+            width: 100%;
+        }
 
-    @media (max-width: 500px) {
-      .article-container,
-      .container {
-        max-width: 100%;
-        padding: 10px;
-      }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--dark-color);
+        }
 
-      .table_main {
-        font-size: 12px;
-        max-width: 100%;
-        display: block;
-        overflow-x: scroll; /* Enable horizontal scrolling for small screens */
-        ;
-      }
-    }
-      @media (min-width: 600px) {
-      footer {
-        padding: 20px;
-        text-align: left;
-      }
+        /* Welcome Section */
+        .welcome-section {
+            text-align: center;
+            padding: 2rem;
+            background-color: #fff;
+            margin: 2rem auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 1200px;
+        }
 
-      footer div {
-        margin-bottom: 0;
-        flex: 1;
-        margin-right: 20px;
-      }
-    }
-    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
+        .welcome-message {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+        }
 
-* {
-  font-family: Open Sans;
-}
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
 
-section {
-  width: 100%;
-  display: inline-block;
-  background: antiquewhite;
-  height: 30vh;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 700;
-  text-decoration: underline;
-}
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-.footer-distributed{
-	background:   darkslategray;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-	box-sizing: border-box;
-	width: 100%;
-	text-align: left;
-	font: bold 16px sans-serif;
-	padding: 13px 14px;
-}
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+            font-size: 1.1rem;
+        }
 
-.footer-distributed .footer-left,
-.footer-distributed .footer-center,
-.footer-distributed .footer-right{
-	display: inline-block;
-	vertical-align: top;
-}
+        .url-input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
 
-/* Footer left */
+        .url-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
 
-.footer-distributed .footer-left{
-	width: 40%;
-}
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+        }
 
-/* The company logo */
+        .btn-primary:hover {
+            background-color: #0d62d0;
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
+            transform: translateY(-2px);
+        }
 
-.footer-distributed h3{
-	color:  #ffffff;
-	font: normal 36px 'Open Sans', cursive;
-	margin: 0;
-}
+        /* News Website Selection */
+        .news-links {
+            margin-top: 2.5rem;
+        }
 
-.footer-distributed h3 span{
-	color:  lightseagreen;
-}
+        .news-links h2 {
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
 
-/* Footer links */
+        .news-select-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
 
-.footer-distributed .footer-links{
-	color:  #ffffff;
-	margin: 20px 0 12px;
-	padding: 0;
-}
+        .news-select-form label {
+            font-weight: 500;
+            margin-right: 10px;
+        }
 
-.footer-distributed .footer-links a{
-	display:inline-block;
-	line-height: 1.8;
-  font-weight:400;
-	text-decoration: none;
-	color:  inherit;
-}
+        .news-select-form select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            min-width: 180px;
+        }
 
-.footer-distributed .footer-company-name{
-	color:  #222;
-	font-size: 14px;
-	font-weight: normal;
-	margin: 0;
-}
+        .note {
+            margin-top: 0.5rem;
+            color: var(--accent-color);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
 
-/* Footer Center */
+        /* Headlines Table */
+        .link-main {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
 
-.footer-distributed .footer-center{
-	width: 35%;
-}
+        .link-main th, .link-main td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #eee;
+        }
 
-.footer-distributed .footer-center i{
-	background-color:  #33383b;
-	color: #ffffff;
-	font-size: 25px;
-	width: 38px;
-	height: 38px;
-	border-radius: 50%;
-	text-align: center;
-	line-height: 42px;
-	margin: 10px 10px;
-	vertical-align: middle;
-}
+        .link-main th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
 
-.footer-distributed .footer-center i.fa-envelope{
-	font-size: 17px;
-	line-height: 38px;
-}
+        .link-main tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
 
-.footer-distributed .footer-center p{
-	display: inline-block;
-	color: #ffffff;
-  font-weight:400;
-	vertical-align: middle;
-	margin:0;
-}
+        .link-main tr:hover {
+            background-color: #f0f7ff;
+        }
 
-.footer-distributed .footer-center p span{
-	display:block;
-	font-weight: normal;
-	font-size:14px;
-	line-height:2;
-}
+        .link-main td a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
 
-.footer-distributed .footer-center p a{
-	color:  lightseagreen;
-	text-decoration: none;;
-}
+        .link-main td a:hover {
+            text-decoration: underline;
+        }
 
-.footer-distributed .footer-links a:before {
-  content: "|";
-  font-weight:300;
-  font-size: 20px;
-  left: 0;
-  color: #fff;
-  display: inline-block;
-  padding-right: 5px;
-}
+        .copy-btn {
+            background-color: #e3f2fd;
+            color: var(--primary-color);
+            border: 1px solid #bbdefb;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
 
-.footer-distributed .footer-links .link-1:before {
-  content: none;
-}
+        .copy-btn:hover {
+            background-color: #bbdefb;
+        }
 
-/* Footer Right */
+        /* Article Container */
+        .article-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
 
-.footer-distributed .footer-right{
-	width: 20%;
-}
+        .article-container h2 {
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            line-height: 1.3;
+        }
 
-.footer-distributed .footer-company-about{
-	line-height: 20px;
-	color:  #92999f;
-	font-size: 13px;
-	font-weight: normal;
-	margin: 0;
-}
+        .article-image {
+            float: right;
+            max-width: 40%;
+            margin: 0 0 20px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
 
-.footer-distributed .footer-company-about span{
-	display: block;
-	color:  #ffffff;
-	font-size: 14px;
-	font-weight: bold;
-	margin-bottom: 20px;
-}
+        .article-container p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #424242;
+        }
 
-.footer-distributed .footer-icons{
-	margin-top: 25px;
-}
+        /* Analysis Table */
+        .analysis-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
 
-.footer-distributed .footer-icons a{
-	display: inline-block;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-	/* background-color:  #33383b; */
-	border-radius: 2px;
+        .analysis-container h1 {
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
 
-	font-size: 20px;
-	color: #ffffff;
-	text-align: center;
-	line-height: 35px;
+        .table-main {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
 
-	margin-right: 3px;
-	margin-bottom: 5px;
-}
+        .table-main th, .table-main td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
 
-/* If you don't want the footer to be responsive, remove these media queries */
+        .table-main th {
+            background-color: #f0f7ff;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
 
-@media (max-width: 880px) {
+        .table-main tr:hover {
+            background-color: #fafafa;
+        }
 
-	.footer-distributed{
-		font: bold 14px sans-serif;
-	}
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: #fff;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
 
-	.footer-distributed .footer-left,
-	.footer-distributed .footer-center,
-	.footer-distributed .footer-right{
-		display: block;
-		width: 100%;
-		margin-bottom: 40px;
-		text-align: center;
-	}
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
 
-	.footer-distributed .footer-center i{
-		margin-left: 0;
-	}
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+            padding: 0 15px;
+        }
 
-}
+        .footer-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
 
-    
-</style>
+        .footer-brand span {
+            color: var(--secondary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+
+        .footer-about p {
+            margin-bottom: 1rem;
+            color: #bbb;
+            line-height: 1.6;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .container, .article-container, .analysis-container, .welcome-section {
+                padding: 1.5rem;
+                margin: 1.5rem 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 2rem;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                gap: 15px;
+            }
+            
+            .article-image {
+                float: none;
+                max-width: 100%;
+                margin: 0 0 20px 0;
+                display: block;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .site-title {
+                font-size: 1.7rem;
+            }
+            
+            .welcome-message {
+                font-size: 1.2rem;
+            }
+            
+            .btn-primary {
+                width: 100%;
+            }
+            
+            .news-select-form {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .news-select-form select, .news-select-form button {
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            .link-main, .table-main {
+                min-width: 600px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <h1 class="site-title">THE NEWS BOOM</h1>
+        </div>
+    </header>
 
-  <header>
-    
-    <h1>THE NEWS BOOM</h1>
+    <nav class="navigation">
+        <div class="nav-content">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('github_login') }}"><i class="fas fa-user-lock"></i> Admin Login</a>
+                <a href="#"><i class="fas fa-comment"></i> Feedback</a>
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact Us</a>
+            </div>
+        </div>
+    </nav>
 
-  </header>
-  <div>
-
-    <div class="navigation">
-      <a href="#">Home</a>
-      
-      <a href="{{ url_for('github_login') }}">Admin Login</a>
-      <a href="#">Feedback</a>
-      <a href="#contact">Contact Us</a>
+    <div class="welcome-section">
+        <p class="welcome-message">Welcome to The News Analyser! Enter a URL below to get started.</p>
     </div>
-  <div class="welcome-message" style="font-weight: bold; ">
-    <p style="font-size: large;">Welcome to The News Analyser! Enter a URL below to get started.</p>
-  </div>
 
+    <div class="container">
+        <form action="/submit" method="post">
+            <div class="form-group">
+                <label for="url">Enter News Article URL:</label>
+                <input type="text" class="url-input" id="url" name="url" placeholder="Paste the URL of any news article to analyze" required>
+            </div>
+            <button type="submit" value="url" name="submit" class="btn-primary">
+                <i class="fas fa-search"></i> Analyse
+            </button>
+        </form>
 
-  <div class="container">
-    <form action="/submit" method="post">
-      <div class="form-group">
-          <label for="url" style="text-align: center; font-weight: bolder;">Enter News Article URL:</label>
-          <input type="text" class="url-input" id="url" name="url" placeholder="Enter URL" required>
-      </div>
-      <button type="submit" value="url" name="submit" class="btn-primary">Analyse</button>
-  </form>
-    <div class="news-links">  
+        <div class="news-links">
+            <h2>Latest News Headlines</h2>
+            <form action="/submit" method="post" class="news-select-form">
+                <label for="news_website">Browse Your Favourite:</label>
+                <select name="news_website" id="news_website">
+                    <option value="India Today">India Today</option>
+                    <option value="The Hindu">The Hindu</option>
+                    <option value="BBC">BBC</option>
+                    <option value="Indian Express">Indian Express</option>
+                    <option value="Times Of India">Times Of India</option>
+                </select>
+                <button type="submit" value="news_website" name="submit" class="btn-primary">
+                    <i class="fas fa-newspaper"></i> Submit
+                </button>
+            </form>
+            <p class="note"><i class="fas fa-info-circle"></i> Coming soon!! Headlines for more websites! For now paste your URLs.</p>
+        </div>
 
-  
- 
-
-<div class="news-links">
-  <h2>Latest News Headlines</h2>
-  <form action="/submit" method="post">
-    <label for="news_website">Browse Your Favourite:</label>
-    <select name="news_website" id="news_website">
-      <option value="India Today">India Today</option>
-      <option value="The Hindu">The Hindu</option>
-      <option value="BBC">BBC</option>
-	<option value="Indian Express">Indian Express</option>
-      <option value="Times Of India">Times Of India</option>
-	
-    </select>
-    <button type="submit" value="news_website" name="submit">Submit</button>
-    <p><span style="color: lightcoral;">NOTE:  </span>coming soon!! Headlines for more websites! for now paste your URLs.</p>
-  </form>
-</div>
-<br><br>
-  <div class="main_link_page">
-    <table class="link_main" border="1">
-      <thead>
-          <tr>
-            {% for element_headline in headers %}
-              <th>{{element_headline}}</th>
-              
-            {% endfor %}
-          </tr>
-      </thead>
-      <tbody>
-        {% for key in latest_headlines %}
-        <tr>
-            <td>{{ key[0] }}</td>
-            <td style="color: blue;">{{ key[1] }}</td>
-            <td><button style="background-color: lightcyan;" onclick="copyToClipboard('{{ key[1] }}')">Copy Link</button></td>
-        </tr>
-        {% endfor %}
-        
-      </tbody>
-  </table>
-    <script>
-      function copyToClipboard(text) {
-          var dummy = document.createElement("textarea");
-          document.body.appendChild(dummy);
-          dummy.value = text;
-          dummy.select();
-          document.execCommand("copy");
-          document.body.removeChild(dummy);
-          alert("Link copied to clipboard: " + text);
-      }
-    </script>
-
-  </div>
-      
+        <div class="main_link_page">
+            <div class="table-container">
+                <table class="link-main">
+                    <thead>
+                        <tr>
+                            {% for element_headline in headers %}
+                            <th>{{element_headline}}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key in latest_headlines %}
+                        <tr>
+                            <td>{{ key[0] }}</td>
+                            <td style="color: var(--primary-color);">{{ key[1] }}</td>
+                            <td>
+                                <button class="copy-btn" onclick="copyToClipboard('{{ key[1] }}')">
+                                    <i class="fas fa-copy"></i> Copy Link
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="main_content">
-    
-    
+
+    {% if article_text %}
     <div class="article-container">
-      <h2 id="analysis">{{ aricle_name }}</h2> 
-      <img src="{{ image_url }}" alt="">
-      
-      <p>{{ article_text|safe }}</p>
-      <h2 id="analysis">{{sum}}</h2>
-      <p>{{ article_summary }}</p>
+        <h2 id="analysis">{{ aricle_name }}</h2>
+        {% if image_url %}
+        <img src="{{ image_url }}" alt="Article image" class="article-image">
+        {% endif %}
+        <div class="article-content">
+            {{ article_text|safe }}
+        </div>
+        
+        {% if article_summary %}
+        <h2 id="summary">{{sum}}</h2>
+        <div class="article-summary">
+            {{ article_summary }}
+        </div>
+        {% endif %}
     </div>
+    {% endif %}
 
-  </div>
-  
-  <div class="container">
-    <h1 class="mt-4 mb-4">{{page}}</h1>
-    <table class="table_main">
-        <thead>
-
-            <tr>
-              {% for i in content12 %}
-                <th>{{i}}</th>
-              {% endfor %}
-              {% for item in pos %}
-                <th>{{ item }}</th>
-                
-              {% endfor %} 
-            </tr>
-        </thead>
-        <tbody>
-            
-            <tr>
-              <td>{{ author }}</td>
-              <td>{{ published_date }}</td>
-              <td>{{num_sentences}}</td>
-              <td>{{num_words}}</td>
-              {% for item in no_of_pos_tags %}
-                <td>{{ item }}</td>
-              {% endfor %}
-            </tr>
-            
-        </tbody>
-    </table>
-  </div>
-  </div>
-
-
-  
-  <footer class="footer-distributed">
-  
-        <div class="footer-left">
-  
-          <h3>The News<span>BOOM</span></h3>
-  
-          <p class="footer-links">
-            <a href="#" class="link-1">Home</a>
-            
-            <a href="#">Blog</a>
-          
-          
-          
-            <a href="#">About</a>
-            
-            <a href="#">Faq</a>
-            
-            <a href="tel:+917325060600">Contact</a>
-          </p>
-  
-          <p class="footer-company-name"> THe News BOOM © 2024</p>
+    {% if content12 %}
+    <div class="analysis-container">
+        <h1>{{page}}</h1>
+        <div class="table-container">
+            <table class="table-main">
+                <thead>
+                    <tr>
+                        {% for i in content12 %}
+                        <th>{{i}}</th>
+                        {% endfor %}
+                        {% for item in pos %}
+                        <th>{{ item }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ author }}</td>
+                        <td>{{ published_date }}</td>
+                        <td>{{num_sentences}}</td>
+                        <td>{{num_words}}</td>
+                        {% for item in no_of_pos_tags %}
+                        <td>{{ item }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
         </div>
-  
-        <div class="footer-center">
-  
-          <div>
-            <i class="fa fa-map-marker"></i>
-            <p><span>226028 C.V Raman</span> SRMCEM, Lucknow</p>
-          </div>
-  
-          <div>
-            <i class="fa fa-phone"></i>
-            <p>+91 7325060600</p>
-          </div>
-  
-          <div>
-            <i class="fa fa-envelope"></i>
-            <p><a href="mailto:su-23014@sitare.org">su-23014@sitare.org</a></p>
-          </div>
-  
-        </div>
-  
-        <div class="footer-right">
-  
-          <p class="footer-company-about">
-            <span>About the Website</span>
-            I am building a plateform where without distractions, user can read their premium content from any websites(eg: news, documentaries, articles etc.)
-          </p>
-  
-          <div class="footer-icons">
-  
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-github"></i></a>
-  
-          </div>
-  
-        </div>
-  
-      </footer>
+    </div>
+    {% endif %}
 
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-brand">The News<span>BOOM</span></h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> FAQ</a></li>
+                </ul>
+            </div>
 
- 
+            <div class="footer-section footer-contact">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 226028 C.V Raman, SRMCEM, Lucknow</p>
+                <p><i class="fas fa-phone"></i> +91 7325060600</p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:su-23014@sitare.org" style="color: #bbb;">su-23014@sitare.org</a></p>
+            </div>
+
+            <div class="footer-section footer-about">
+                <h3>About the Website</h3>
+                <p>I am building a platform where without distractions, users can read their premium content from any websites (e.g., news, documentaries, articles etc.)</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>The News BOOM &copy; 2024 | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Copy URL to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    alert("Link copied to clipboard: " + text);
+                })
+                .catch(err => {
+                    // Fallback for older browsers
+                    var dummy = document.createElement("textarea");
+                    document.body.appendChild(dummy);
+                    dummy.value = text;
+                    dummy.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(dummy);
+                    alert("Link copied to clipboard: " + text);
+                });
+        }
+        
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
 </body>
 </html>
-
